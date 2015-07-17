@@ -15,6 +15,45 @@ function createModel(elem) {
             general: /^\!\[.+\]\((https?:\/\/[-a-zA-Z0-9@:%._\+\/~#=]{2,256}\.png){1}\)$/gm,
     };
 
+    function copyToClipboard( text ){
+        var copyDiv = document.createElement('div');
+        copyDiv.contentEditable = true;
+        document.body.appendChild(copyDiv);
+        copyDiv.innerText = text;
+        copyDiv.unselectable = "off";
+        copyDiv.focus();
+        document.execCommand('SelectAll');
+        document.execCommand("Copy", false, null);
+        console.log("text", text);
+        document.body.removeChild(copyDiv);
+    }
+
+    // parse plain image urls from markdown urls
+    function parseImageUrls (arr, regex, index) {
+        var index = (index || 1); // default to first capturing group
+        var regex = (regex || regexes.general);
+
+        return arr.map(function(fullUrl){
+            var match = regex.exec(fullUrl);
+            regex.lastIndex = 0; // reset so next is not null
+            
+            return (match!==null ? match[index] : '');
+        }, this);
+    }
+
+    function hasValidImageUrl (url, opts) {
+        var regex = (opts && opts.regex) || regexes.general;
+        return regex.test(url); // true if match
+    }
+
+    // parse markdown urls from large input blob
+    function parseMarkdownUrls (opts) {
+        var regex = (opts && opts.regex) || regexes.general;
+        var text = elem.input.value;
+
+        return (text.match(regex) || []);
+    };
+
     return {
         convertBtns: [].slice.call(elem.convertBtns),
         resultsDiv: elem.resultsDiv,
@@ -22,7 +61,7 @@ function createModel(elem) {
             this.convertBtns.forEach(function(button){
                 button.addEventListener('click', function(){
                     // get the markdown urls
-                    var mkdownUrls = this.parseMarkdownUrls(opts);
+                    var mkdownUrls = parseMarkdownUrls(opts);
                     var options = {
                         toSize: button.dataset.size // X2 or X3
                     };
@@ -36,7 +75,7 @@ function createModel(elem) {
         // Input listeners on input colors
         initInputListeners: function(opts) {
             elem.input.addEventListener('input', function(){
-                if (this._hasValidImageUrl(elem.input.value)) {
+                if (hasValidImageUrl(elem.input.value)) {
                     elem.input.style.backgroundColor = opts.valid;
                 } else {
                     elem.input.style.backgroundColor = opts.invalid;
@@ -50,49 +89,29 @@ function createModel(elem) {
                 }
             }.bind(this));
         },
-        // parse markdown urls from large input blob
-        parseMarkdownUrls: function(opts){
-            var regex = (opts && opts.regex) || regexes.general;
-            var text = elem.input.value;
-
-            return (text.match(regex) || []);
-        },
+       
         // convert markdown urls to image urls => build string
         markdownToImageTags: function(mkdownUrls, options) {
             // <img src="https://github.com/favicon.ico" width="48">
             var options = options || {};
             var toSize = options.toSize || defaultSizeX2;
 
-            var imageUrls = this._parseImageUrls(mkdownUrls);
-            var urls = imageUrls.map(function(imageUrl) {
+            var imageUrls = parseImageUrls(mkdownUrls);
+
+            return imageUrls.map(function(imageUrl) {
                 if (!imageUrl.length) return;
 
                 return "<img src=" + imageUrl + " width=" + toSize + ">";
             });
-
-            return urls;
         },
-        // parse plain image urls from markdown urls
-        _parseImageUrls: function(arr, regex, index) {
-            var index = (index || 1); // default to first capturing group
-            var regex = (regex || regexes.general);
-
-            return arr.map(function(fullUrl){
-                var match = regex.exec(fullUrl);
-                regex.lastIndex = 0; // reset so next is not null
-                
-                return (match!==null ? match[index] : '');
-            }, this);
-        },
-        _hasValidImageUrl: function(url, opts){
-            var regex = (opts && opts.regex) || regexes.general;
-            return regex.test(url); // true if match
-        },
+        
         render: function(data){
             var str = data.urls.join(" ");
 
             this.resultsDiv.childNodes[0].innerText = str;
             this.resultsDiv.style.opacity = 1.0;
+
+            copyToClipboard(str);
         },
     };
 }
@@ -113,7 +132,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     var colors = {
         valid: "#cdfd02",
-        invalid: "#ff000d",
+        invalid: "#ff1744",
         empty: "#eee"
     };
 
