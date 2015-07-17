@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
-  "name": "Github Image Resize",
-  "description": "Minimize images in your pull request",
+  "name": "Github Image Squisher",
+  "description": "Squish screenshots in your pull request",
   "version": "1.0",
   "browser_action": {
     "default_icon": "assets/squasher.png",

@@ -106,13 +106,21 @@ function createModel(elem) {
         },
         
         render: function(data){
+            var code = this.resultsDiv.childNodes[0];
             var str = data.urls.join(" ");
 
-            this.resultsDiv.childNodes[0].innerText = str;
-            this.resultsDiv.style.opacity = 1.0;
-
-            copyToClipboard(str);
-        },
+            if (!str.length) {
+                code.innerText = "no images, sorry :(";
+            } else {
+                copyToClipboard(str);
+                var span = document.createElement('span');
+                span.innerText = str;
+                code.innerText = "";
+                code.appendChild(span);
+                this.resultsDiv.style.opacity = 1.0;
+                this.resultsDiv.childNodes[0].classList.add("selected");
+            }
+        }
     };
 }
 
