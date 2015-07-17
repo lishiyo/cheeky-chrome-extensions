@@ -4,7 +4,7 @@
   "description": "Minimize images in your pull request",
   "version": "1.0",
   "browser_action": {
-    "default_icon": "assets/icon.png",
+    "default_icon": "assets/squasher.png",
     "default_popup": "popup.html"
   },
   "permissions": [
