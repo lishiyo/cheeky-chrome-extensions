@@ -7,7 +7,7 @@ div, input, pre {
   box-sizing: border-box;
 }
 
-input {
+input, textarea {
   width: 100%;
   border: none;
   outline: none;
@@ -16,6 +16,7 @@ input {
   padding: 4px;
   opacity: 0.8;
   font-size: 9px;
+  height: auto;
 }
 
 pre {
