@@ -24,7 +24,6 @@ function createModel(elem) {
         copyDiv.focus();
         document.execCommand('SelectAll');
         document.execCommand("Copy", false, null);
-        console.log("text", text);
         document.body.removeChild(copyDiv);
     }
 
@@ -36,7 +35,7 @@ function createModel(elem) {
         return arr.map(function(fullUrl){
             var match = regex.exec(fullUrl);
             regex.lastIndex = 0; // reset so next is not null
-            
+
             return (match!==null ? match[index] : '');
         }, this);
     }
@@ -89,7 +88,7 @@ function createModel(elem) {
                 }
             }.bind(this));
         },
-       
+
         // convert markdown urls to image urls => build string
         markdownToImageTags: function(mkdownUrls, options) {
             // <img src="https://github.com/favicon.ico" width="48">
@@ -104,7 +103,7 @@ function createModel(elem) {
                 return "<img src=" + imageUrl + " width=" + toSize + ">";
             });
         },
-        
+
         render: function(data){
             var code = this.resultsDiv.childNodes[0];
             var str = data.urls.join(" ");
