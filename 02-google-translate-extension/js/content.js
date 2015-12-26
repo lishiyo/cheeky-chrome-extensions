@@ -13,3 +13,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     console.log("got message! " + firstHref);
   }
 });
+
+chrome.runtime.onStartup.addListener(function() {
+    console.log("content startup!");
+});
