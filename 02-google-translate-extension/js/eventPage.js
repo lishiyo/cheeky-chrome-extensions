@@ -16,7 +16,6 @@
 const createModel = (model) => {
     const API_KEY = "AIzaSyAYblfYIG9BHl_XqkVLzds89t8bjNKIyak";
     const inputEl = model.inputEl; // destructuring not supported in 47 yet
-    console.log("create model targetBtns", model.targetBtns);
     const targetBtns = [].slice.call(model.targetBtns); // HTMLCollection must be converted to array
     const resultsEl = model.resultsEl;
 
@@ -60,7 +59,7 @@ const createModel = (model) => {
         targetBtns.forEach((button) => {
             button.addEventListener('click', function(){
                 // grab input from input Elem
-                const query = encodeURIComponent(inputEl.value);
+                const query = (inputEl.value);
                 const params = {
                     q: query,
                     target: button.dataset.lang // data-lang=es
@@ -71,19 +70,37 @@ const createModel = (model) => {
         });
     };
 
+    const copyToClipboard = (text) => {
+        const copyDiv = document.createElement('div');
+        copyDiv.contentEditable = true;
+        document.body.appendChild(copyDiv);
+        copyDiv.innerText = text;
+        copyDiv.unselectable = "off";
+        copyDiv.focus();
+        document.execCommand('SelectAll');
+        document.execCommand("Copy", false, null);
+        document.body.removeChild(copyDiv);
+    };
+
     const render = (str) => {
         if (!resultsEl) {
             return;
         }
 
+        const decodeHtmlEntity = function(str) {
+            console.log("str", str);
+              return str.replace(/&#(\d+);/g, function(match, dec) {
+                return String.fromCharCode(dec);
+              });
+        };
         const textNode = resultsEl.childNodes[0];
 
         if (!str.length) {
             textNode.innerText = "no translation, sorry :(";
         } else {
-            // copyToClipboard(str);
+            copyToClipboard(str);
             const span = document.createElement('span');
-            span.innerText = str;
+            span.innerText = decodeHtmlEntity(str);
             textNode.innerText = "";
             textNode.appendChild(span);
             resultsEl.style.opacity = 1.0;

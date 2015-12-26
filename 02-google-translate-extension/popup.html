@@ -7,7 +7,7 @@
     <script src="js/eventPage.js"></script>
   </head>
   <body>
-    <textarea rows="4" id="input" placeholder="paste text"></textarea>
+    <textarea rows="4" id="input" placeholder="PASTE TEXT"></textarea>
     <div class="row buttons">
       <button class="button raised clickable target-lang" data-lang="zh-CN">
         <input type="radio" class="toggle" value="zh-CN" checked />
@@ -17,9 +17,13 @@
         <input type="radio" class="toggle" value="es" />
         <div class="anim"></div><span>spanish</span>
       </button>
+      <button class="button raised clickable red target-lang" data-lang="en">
+        <input type="radio" class="toggle" value="en" />
+        <div class="anim"></div><span>english</span>
+      </button>
     </div>
     <!-- <button id="submit" type="submit" class="button">TRANSLATE</button> -->
-    <pre id="results"><code>TRANSLATION</code></pre>
+    <pre id="results"><code>output</code></pre>
   </body>
 </html>
 
