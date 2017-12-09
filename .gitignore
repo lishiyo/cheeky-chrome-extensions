@@ -1,2 +1,6 @@
 .env
 make_page_red/
+chrome*.json
+node_modules/
+*/node_modules/
+*/chrome*.json
