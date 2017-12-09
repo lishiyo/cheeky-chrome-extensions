@@ -25,8 +25,9 @@ Download at [BS Detector](https://github.com/lishiyo/bs-detector.git) - an exten
 
 ## /r/listentothis Player
 
-Play songs from [/r/listentothis](https://www.reddit.com/r/listentothis/) while browsing any tab. 
+Play songs from [/r/listentothis](https://www.reddit.com/r/listentothis/) while browsing any tab - just tap the extension to load the next song:
 
+![image](https://user-images.githubusercontent.com/7489058/33799920-7952a010-dd03-11e7-90f6-4b855513ca2c.png)
 
 ## Google Translate
 
