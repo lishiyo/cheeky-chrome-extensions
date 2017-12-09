@@ -9,10 +9,10 @@
   },
   "permissions": [
     "https://oauth.reddit.com/",
-    "https://www.reddit.com/"
+    "https://www.reddit.com/",
+    "storage"
   ],
   "background": {
-    "scripts": [ "vendor/Snoocore-browser.min.js", "js/background.js" ],
-    "persistent": false
+    "scripts": [ "vendor/Snoocore-browser.min.js", "js/background.js" ]
   }
 }
