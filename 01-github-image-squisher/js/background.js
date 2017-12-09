@@ -1,22 +1,22 @@
 function createModel(elem) {
-    var container = document.getElementById('pull_request_body'),
+    const container = document.getElementById('pull_request_body'),
         defaultSizeX2 = 330,
         inputs = [],
         imageUrls = [];
 
-    var regexes = {
-            // ![image-alt](https://cloud.githubusercontent.com/assets/7489058/8714900/87aad6ec-2b48-11e5-89a1-10181c4d893b.png)
-            personal: /!\[.+\]\((https?:\/\/cloud\.githubusercontent\.com\/assets\/[-a-zA-Z0-9@:%._\+~#=]{2,25}\/[-a-zA-Z0-9@:%._\+~#=]{2,25}\/[-a-zA-Z0-9@:%._\+~#=]{2,256}\.png)\)/,
+    const regexes = {
+            // ![image](https://user-images.githubusercontent.com/7489058/33798357-dba685ca-dce4-11e7-8f23-a30eb491c173.png)
+            personal: /!\[.+\]\((https?:\/\/.+\.githubusercontent\.com\/[-a-zA-Z0-9@:%._\+~#=\/]{2,256}\.png)\)/,
 
-            // ![image](https://github.ewr01.tumblr.net/github-enterprise-assets/0000/0215/0000/6663/af60cc22-2a45-11e5-9044-1c266c2a6e45.png)
-            tumblr: /!\[.+\]\((https?:\/\/github\.ewr01\.tumblr\.net\/github-enterprise-assets\/[-a-zA-Z0-9@:%._\+\/~#=]{2,256}\.png)\)/,
+            // ![image](https://github.xxx.xxx.net/github-enterprise-assets/0000/0215/0000/6663/af60cc22-2a45-11e5-9044-1c266c2a6e45.png)
+            enterprise: /!\[.+\]\((https?:\/\/[-a-zA-Z.]*github.*\/[-a-zA-Z0-9@:%._\+~#=\/]{2,256}\.png)\)/,
 
-            // ![image](https://any-url-here)
+            // ![image](https://any-url-here.png)
             general: /^\!\[.+\]\((https?:\/\/[-a-zA-Z0-9@:%._\+\/~#=]{2,256}\.png){1}\)$/gm,
     };
 
-    function copyToClipboard( text ){
-        var copyDiv = document.createElement('div');
+    function copyToClipboard(text) {
+        let copyDiv = document.createElement('div');
         copyDiv.contentEditable = true;
         document.body.appendChild(copyDiv);
         copyDiv.innerText = text;
@@ -28,27 +28,27 @@ function createModel(elem) {
     }
 
     // parse plain image urls from markdown urls
-    function parseImageUrls (arr, regex, index) {
-        var index = (index || 1); // default to first capturing group
-        var regex = (regex || regexes.general);
+    function parseImageUrls(arr, regex) {
+        let regexToMatch = (regex || regexes.general); // default to general
 
-        return arr.map(function(fullUrl){
-            var match = regex.exec(fullUrl);
-            regex.lastIndex = 0; // reset so next is not null
-
-            return (match!==null ? match[index] : '');
+        return arr.map(fullUrl => {
+            let match = regexToMatch.exec(fullUrl);
+            regexToMatch.lastIndex = 0; // reset so next is not null
+            
+            return (match !== null ? match[1] : '');
         }, this);
     }
 
-    function hasValidImageUrl (url, opts) {
-        var regex = (opts && opts.regex) || regexes.general;
-        return regex.test(url); // true if match
+    // @return true if we matched the regex
+    function hasValidImageUrl(url, opts) {
+        let regex = (opts && opts.regex) || regexes.general;
+        return regex.test(url);
     }
 
     // parse markdown urls from large input blob
-    function parseMarkdownUrls (opts) {
-        var regex = (opts && opts.regex) || regexes.general;
-        var text = elem.input.value;
+    function parseMarkdownUrls(opts) {
+        let regex = (opts && opts.regex) || regexes.general;
+        let text = elem.input.value;
 
         return (text.match(regex) || []);
     };
@@ -60,12 +60,11 @@ function createModel(elem) {
             this.convertBtns.forEach(function(button){
                 button.addEventListener('click', function(){
                     // get the markdown urls
-                    var mkdownUrls = parseMarkdownUrls(opts);
-                    var options = {
-                        toSize: button.dataset.size // X2 or X3
-                    };
+                    let mkdownUrls = parseMarkdownUrls(opts);
                     // convert markdown urls to image tags
-                    var urls = this.markdownToImageTags(mkdownUrls, options);
+                    let urls = this.markdownToImageTags(mkdownUrls, {
+                        toSize: button.dataset.size // X2 or X3
+                    });
 
                     this.render({ urls: urls });
                 }.bind(this));
@@ -88,31 +87,30 @@ function createModel(elem) {
                 }
             }.bind(this));
         },
-
+       
         // convert markdown urls to image urls => build string
-        markdownToImageTags: function(mkdownUrls, options) {
+        markdownToImageTags: function(mkdownUrls, opts) {
             // <img src="https://github.com/favicon.ico" width="48">
-            var options = options || {};
-            var toSize = options.toSize || defaultSizeX2;
+            let options = opts || {};
+            let toSize = options.toSize || defaultSizeX2;
+            let imageUrls = parseImageUrls(mkdownUrls);
 
-            var imageUrls = parseImageUrls(mkdownUrls);
-
-            return imageUrls.map(function(imageUrl) {
+            return imageUrls.map(imageUrl => {
                 if (!imageUrl.length) return;
 
                 return "<img src=" + imageUrl + " width=" + toSize + ">";
             });
         },
-
+        
         render: function(data){
-            var code = this.resultsDiv.childNodes[0];
-            var str = data.urls.join(" ");
+            let code = this.resultsDiv.childNodes[0];
+            let str = data.urls.join(" ");
 
             if (!str.length) {
                 code.innerText = "no images, sorry :(";
             } else {
                 copyToClipboard(str);
-                var span = document.createElement('span');
+                let span = document.createElement('span');
                 span.innerText = str;
                 code.innerText = "";
                 code.appendChild(span);
@@ -126,23 +124,21 @@ function createModel(elem) {
 document.addEventListener('DOMContentLoaded', function() {
     // var inputs = document.getElementsByClassName("mkdown_image"),
     // Parse out array of markdown Urls from input
-    var input = document.getElementById("mkdown_images"),
+    const input = document.getElementById("mkdown_images"),
     convertBtns = document.getElementsByTagName('button'),
     resultsDiv = document.getElementById('results');
-
-    var model = createModel({
-        // inputs: inputs,
-        input: input,
-        convertBtns: convertBtns,
-        resultsDiv: resultsDiv
-    });
-
-    var colors = {
+    const colors = {
         valid: "#cdfd02",
         invalid: "#ff1744",
         empty: "#eee"
     };
 
+    const model = createModel({
+        // inputs: inputs,
+        input: input,
+        convertBtns: convertBtns,
+        resultsDiv: resultsDiv
+    });
     model.initInputListeners(colors);
     model.getResults();
 
