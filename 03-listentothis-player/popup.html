@@ -11,15 +11,19 @@ value "popup.html".
      body {
        font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
        font-size: 100%;
-       width: 300px;
-       height: 600px;
+       min-width: 300px;
+       min-height: 300px;
+       width: 100%;
+       height: 100%;
+     }
+     .row {
+        max-width: 100%;
+        text-align: center; 
      }
      #title {
-       /* avoid an excessively wide status text */
        white-space: pre;
        text-overflow: ellipsis;
        overflow: hidden;
-       max-width: 400px;
      }
      #awwImg {
        width: 100%;
@@ -38,7 +42,7 @@ value "popup.html".
   </head>
   <body>
     <!-- <img id="awwImg" /> -->
+    <div class="row" id="title">Loading...</div>
     <div id="results"></div>
-    <div id="title">Loading / Authenticating...</div>
   </body>
 </html>
