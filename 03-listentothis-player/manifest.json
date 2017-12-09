@@ -1,0 +1,18 @@
+{
+  "manifest_version": 2,
+  "name": "ListenToThis",
+  "description": "autoplay hot from r/listentothis",
+  "version": "0.0.1",
+  "browser_action": {
+    "default_icon": "assets/icon.png",
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "https://oauth.reddit.com/",
+    "https://www.reddit.com/"
+  ],
+  "background": {
+    "scripts": [ "vendor/Snoocore-browser.min.js", "js/background.js" ],
+    "persistent": false
+  }
+}

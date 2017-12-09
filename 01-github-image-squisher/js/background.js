@@ -5,11 +5,11 @@ function createModel(elem) {
         imageUrls = [];
 
     var regexes = {
-            // ![image-alt](https://cloud.githubusercontent.com/assets/7489058/8714900/87aad6ec-2b48-11e5-89a1-10181c4d893b.png)
-            personal: /!\[.+\]\((https?:\/\/cloud\.githubusercontent\.com\/assets\/[-a-zA-Z0-9@:%._\+~#=]{2,25}\/[-a-zA-Z0-9@:%._\+~#=]{2,25}\/[-a-zA-Z0-9@:%._\+~#=]{2,256}\.png)\)/,
+            // ![image-alt](https://*.githubusercontent.com/assets/7489058/8714900/87aad6ec-2b48-11e5-89a1-10181c4d893b.png)
+            personal: /!\[.+\]\((https?:\/\/*\.githubusercontent\.com\/assets\/[-a-zA-Z0-9@:%._\+~#=]{2,25}\/[-a-zA-Z0-9@:%._\+~#=]{2,25}\/[-a-zA-Z0-9@:%._\+~#=]{2,256}\.png)\)/,
 
             // ![image](https://github.ewr01.tumblr.net/github-enterprise-assets/0000/0215/0000/6663/af60cc22-2a45-11e5-9044-1c266c2a6e45.png)
-            tumblr: /!\[.+\]\((https?:\/\/github\.ewr01\.tumblr\.net\/github-enterprise-assets\/[-a-zA-Z0-9@:%._\+\/~#=]{2,256}\.png)\)/,
+            tumblr: /!\[.+\]\((https?:\/\/github\.bf2\.tumblr\.net\/github-enterprise-assets\/[-a-zA-Z0-9@:%._\+\/~#=]{2,256}\.png)\)/,
 
             // ![image](https://any-url-here)
             general: /^\!\[.+\]\((https?:\/\/[-a-zA-Z0-9@:%._\+\/~#=]{2,256}\.png){1}\)$/gm,
@@ -24,6 +24,7 @@ function createModel(elem) {
         copyDiv.focus();
         document.execCommand('SelectAll');
         document.execCommand("Copy", false, null);
+        console.log("text", text);
         document.body.removeChild(copyDiv);
     }
 
@@ -35,7 +36,7 @@ function createModel(elem) {
         return arr.map(function(fullUrl){
             var match = regex.exec(fullUrl);
             regex.lastIndex = 0; // reset so next is not null
-
+            
             return (match!==null ? match[index] : '');
         }, this);
     }
@@ -88,7 +89,7 @@ function createModel(elem) {
                 }
             }.bind(this));
         },
-
+       
         // convert markdown urls to image urls => build string
         markdownToImageTags: function(mkdownUrls, options) {
             // <img src="https://github.com/favicon.ico" width="48">
@@ -103,7 +104,7 @@ function createModel(elem) {
                 return "<img src=" + imageUrl + " width=" + toSize + ">";
             });
         },
-
+        
         render: function(data){
             var code = this.resultsDiv.childNodes[0];
             var str = data.urls.join(" ");
