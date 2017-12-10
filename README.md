@@ -33,7 +33,7 @@ Play songs from [/r/listentothis](https://www.reddit.com/r/listentothis/) while 
 
 Paste in text to translate to any google-supported language (autodetects the language or just customize the to/from languages):
 
-To English | To Spanish
+Chinese to English | Chinese to Spanish
 --- | ---
 ![image](https://user-images.githubusercontent.com/7489058/33801248-11dddcea-dd23-11e7-8d06-ce76c11ca7b3.png) | ![image](https://user-images.githubusercontent.com/7489058/33801247-05892184-dd23-11e7-8e10-357201683724.png)
 
