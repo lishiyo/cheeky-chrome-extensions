@@ -34,3 +34,5 @@ Play songs from [/r/listentothis](https://www.reddit.com/r/listentothis/) while 
 Paste in any text and translate to Chinese, Spanish, or English.
 
 ## Chinese-to-pinyin translator
+
+Paste in Chinese text to translate to pinyin.

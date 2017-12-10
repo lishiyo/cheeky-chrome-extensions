@@ -1,34 +1,96 @@
-// import dotenv from 'dotenv';
-// dotenv.load();
-// import axios from 'axios';
-// import fs from 'fs';
+const BASE_URL = "https://translation.googleapis.com/language/translate/v2?key=";
+const TARGET_LANG = "en";
+const STORAGE_KEY = "google-translate-key";
 
-// let url = "https://www.googleapis.com/language/translate/v2";
-// let target='zh-CN';
-// let query="hello world!! one + two is three :) 100%";
-// var outputFilename = './results.json';
+// fire off the request
+const translateText = (request, text, key) => {
+    let data = {
+        q: text, 
+        target: TARGET_LANG 
+    };
+    let formattedJsonData = JSON.stringify(data);
+    console.log('sending with key: ', key, formattedJsonData); 
+    request.open('POST', BASE_URL + key);
+    request.send(formattedJsonData); // send it off!
+}
 
-// const getTranslation = () => {
-//     axios.get(url, {
-//         params: {
-//           key: process.env.TRANSLATE_SERVER_KEY,
-//           q: query,
-//           target: target
-//         }
-//     })
-//     .then(response => {
-//         const resultsArr = response.data.data.translations;
-//         fs.writeFile(outputFilename, JSON.stringify(resultsArr), err => {
-//             if (err) {
-//               console.log(err);
-//             } else {
-//               console.log("JSON saved to " + outputFilename);
-//             }
-//         });
-//     })
-//     .catch(response => {
-//         console.log("error", response);
-//     });
-// }
+// handle the response
+const onRequestSuccess = (response) => {
+    console.log('request finished: ', response);
+    let translations = response.data.translations;
+    
+    // handle the response
+    let resultsDiv = document.getElementById('results');
+    if (translations.length > 0) {
+        resultsDiv.innerText = translations[0].translatedText;
+    } else {
+        resultsDiv.innerText = "No results :( detected source language: " + translations[0].detectedSourceLanguage;
+    }
+}
 
-// getTranslation();
+const saveCurrentKey = (key) => {
+    chrome.storage.sync.set({
+      "google-translate-key": key
+    }, function() {
+      console.log('data saved', key);
+    });
+}
+
+const promptForKey = (shouldPrompt) => {
+    const input = document.getElementById("input"),
+    apiInput = document.getElementById('apikey');
+    if (shouldPrompt) {
+        input.setAttribute('placeholder', "you need an api key!");
+        apiInput.focus();
+    } else {
+        input.setAttribute('placeholder', "READY: paste text here");
+        apiInput.blur();
+        input.focus();
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const input = document.getElementById("input"),
+    submitBtn = document.getElementById("submit"),
+    apiInput = document.getElementById("apikey");
+
+    // setup once
+    const request = new XMLHttpRequest();
+    request.onload = function() {
+        if (request.status >= 200 && request.status < 400) {
+            let data = JSON.parse(request.responseText);
+            onRequestSuccess(data);
+        } else {
+            // We reached our target server, but it returned an error
+            console.log("something went wrong", request);
+        }
+    };
+    request.onerror = function() {
+        console.log('request error');
+    };
+    submitBtn.addEventListener('click', () => {
+        translateText(request, input.value, apiInput.value);
+    })
+
+    apiInput.addEventListener('input', event => {
+        saveCurrentKey(apiInput.value);
+        promptForKey(false)
+    });
+
+    // figure out api key
+    chrome.storage.sync.get(STORAGE_KEY, results => {
+        let key = results[STORAGE_KEY];
+        console.log("sync! got key: ", results, key);
+        if (key && key.length) {
+            // we have a key, can make request
+            apiInput.value = key;
+            apiInput.blur();
+            promptForKey(false);
+        } else {
+            promptForKey(true); 
+        }
+    });
+    
+   
+    
+}, false);
