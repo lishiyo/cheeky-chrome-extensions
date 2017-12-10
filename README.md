@@ -1,11 +1,14 @@
 Cheeky Chrome Extensions
 =======
 
-random little chrome extensions to do debatably useful things.
+Random little chrome extensions to do debatably useful things.
 
-Usage: 
-- `git clone https://github.com/lishiyo/cheeky-chrome-extensions.git`
-- follow https://developer.chrome.com/extensions/getstarted#unpacked
+To use, clone this repo and load the extension by following the instructions here: https://developer.chrome.com/extensions/getstarted#unpacked
+
+- [Github Image Squisher](https://github.com/lishiyo/cheeky-chrome-extensions#github-image-squisher)
+- [BS Detector](https://github.com/lishiyo/bs-detector.git)
+- [/r/listentothis player](https://github.com/lishiyo/cheeky-chrome-extensions#rlistentothis-player)
+- [Google Translator](https://github.com/lishiyo/cheeky-chrome-extensions#google-translate)
 
 ## Github Image Squisher
 
