@@ -31,8 +31,14 @@ Play songs from [/r/listentothis](https://www.reddit.com/r/listentothis/) while 
 
 ## Google Translate
 
-Paste in any text and translate to Chinese, Spanish, or English.
+Paste in text to translate to any google-supported language (autodetects the language or just customize the to/from languages):
+
+To English | To Spanish
+--- | ---
+![image](https://user-images.githubusercontent.com/7489058/33801248-11dddcea-dd23-11e7-8d06-ce76c11ca7b3.png) | ![image](https://user-images.githubusercontent.com/7489058/33801247-05892184-dd23-11e7-8e10-357201683724.png)
+
+(note: to set up you'll need to grab a client-side api key for google translate)
 
 ## Chinese-to-pinyin translator
 
-Paste in Chinese text to translate to pinyin.
+[WIP] Paste in Chinese text to translate to pinyin.

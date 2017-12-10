@@ -3,11 +3,15 @@ const TARGET_LANG = "en";
 const STORAGE_KEY = "google-translate-key";
 
 // fire off the request
-const translateText = (request, text, key) => {
+const translateText = (request, key, textData) => {
     let data = {
-        q: text, 
-        target: TARGET_LANG 
+        q: textData.q, 
+        target: textData.to || TARGET_LANG
     };
+    if (textData.from != "auto") {
+        data.from = textData.from;
+    }
+    
     let formattedJsonData = JSON.stringify(data);
     console.log('sending with key: ', key, formattedJsonData); 
     request.open('POST', BASE_URL + key);
@@ -52,7 +56,9 @@ const promptForKey = (shouldPrompt) => {
 document.addEventListener('DOMContentLoaded', function() {
     const input = document.getElementById("input"),
     submitBtn = document.getElementById("submit"),
-    apiInput = document.getElementById("apikey");
+    apiInput = document.getElementById("apikey"),
+    fromLang = document.getElementById("from"),
+    toLang = document.getElementById("to");
 
     // setup once
     const request = new XMLHttpRequest();
@@ -69,7 +75,11 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('request error');
     };
     submitBtn.addEventListener('click', () => {
-        translateText(request, input.value, apiInput.value);
+        translateText(request, apiInput.value, {
+            q: input.value,
+            from: fromLang.value,
+            to: toLang.value
+        });
     })
 
     apiInput.addEventListener('input', event => {
