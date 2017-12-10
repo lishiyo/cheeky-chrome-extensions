@@ -21,13 +21,21 @@ Extension | Results
 
 ## BS Detector
 
-Download at [BS Detector](https://github.com/lishiyo/bs-detector.git) - an extension that helpfully highlights links from reportedly fake news sources with a poop emoji :) 
+See [BS Detector](https://github.com/lishiyo/bs-detector.git) - an extension that helpfully highlights links from flagged news sources with BIG RED TEXT :) Data from [OpenSources](http://www.opensources.co/).
+
+<img src=https://user-images.githubusercontent.com/7489058/33801535-fd02554a-dd2b-11e7-9345-62f37a48d1fc.png width=400> <img src=https://user-images.githubusercontent.com/7489058/33801476-5f163e92-dd2a-11e7-8c7a-81fc961b1cf3.png width=400> 
+
+<img src=https://user-images.githubusercontent.com/7489058/33801444-538ef826-dd29-11e7-84aa-0cf1720a7cc8.png width=400> <img src=https://user-images.githubusercontent.com/7489058/33801446-5c2ee8ce-dd29-11e7-9e8a-8d5cf6b1e602.png width=400>
+
+<img src=https://user-images.githubusercontent.com/7489058/33801458-844b78cc-dd29-11e7-87c6-a16ec53ff8d1.png width=400> <img src=https://user-images.githubusercontent.com/7489058/33801480-6f79a3be-dd2a-11e7-9820-4435bd70d67f.png width=400>
+
 
 ## /r/listentothis Player
 
 Play songs from [/r/listentothis](https://www.reddit.com/r/listentothis/) while browsing any tab - just tap the extension to load the next song:
 
 ![image](https://user-images.githubusercontent.com/7489058/33799920-7952a010-dd03-11e7-90f6-4b855513ca2c.png)
+
 
 ## Google Translate
 
@@ -39,6 +47,3 @@ Chinese to English | Chinese to Spanish
 
 (note: to set up you'll need to grab a client-side api key for google translate)
 
-## Chinese-to-pinyin translator
-
-[WIP] Paste in Chinese text to translate to pinyin.
