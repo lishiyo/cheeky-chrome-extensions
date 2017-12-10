@@ -1,0 +1,16 @@
+{
+    "manifest_version": 2,
+    "name": "Google Translate",
+    "description": "Translate any text into English",
+    "version": "1.0",
+    "browser_action": {
+      "default_icon": "assets/icon.png",
+      "default_popup": "popup.html"
+    },
+    "permissions": [
+      "activeTab",
+      "https://ajax.googleapis.com/",
+      "storage"
+    ]
+  }
+  

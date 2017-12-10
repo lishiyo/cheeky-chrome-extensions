@@ -4,25 +4,17 @@
     <title>Google Translate</title>
     <link rel="stylesheet" href="css/main.css" type="text/css">
     <!-- JS and html MUST be separate -->
-    <script src="js/eventPage.js"></script>
+    <script src="js/index.js"></script>
   </head>
   <body>
-    <textarea rows="4" id="input" placeholder="PASTE TEXT"></textarea>
+    <input id="apikey" type="password" placeholder="input api key here">
+    <textarea rows="4" id="input"></textarea>
     <div class="row buttons">
-      <button class="button raised clickable target-lang" data-lang="zh-CN">
-        <input type="radio" class="toggle" value="zh-CN" checked />
-        <div class="anim"></div><span>chinese</span>
-      </button>
-      <button class="button raised clickable green target-lang" data-lang="es">
-        <input type="radio" class="toggle" value="es" />
-        <div class="anim"></div><span>spanish</span>
-      </button>
-      <button class="button raised clickable red target-lang" data-lang="en">
-        <input type="radio" class="toggle" value="en" />
-        <div class="anim"></div><span>english</span>
-      </button>
+        <button id="submit" type="submit" class="button raised green clickable row">TRANSLATE</button>
+        <input id="from" class="lang" value="auto">
+        <input id="to" class="lang" value="en">
     </div>
-    <!-- <button id="submit" type="submit" class="button">TRANSLATE</button> -->
+    
     <pre id="results"><code>output</code></pre>
   </body>
 </html>
